@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tangent Design — The Edit 2026</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #f9f9f9; color: #2d3435; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    :root {
+      --dark: #2d3435; --muted: #5a6061; --label: #757c7d; --steel: #5e5e5e;
+      --bg: #f9f9f9; --bg-alt: #f2f4f4; --white: #f8f8f8;
+      --footer-bg: #f5f5f4; --footer-txt: #78716c;
+      --nav-bg: rgba(255,255,255,0.82); --shadow: 0 1px 2px rgba(0,0,0,0.05);
+      --max-w: 1280px; --gutter: 48px;
+    }
+
+    /* Scroll animations */
+    .fade-up { opacity: 0; transform: translateY(48px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .fade-left.visible { opacity: 1; transform: translateX(0); }
+    .fade-right { opacity: 0; transform: translateX(40px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .fade-right.visible { opacity: 1; transform: translateX(0); }
+    .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; } .delay-4 { transition-delay: 0.45s; }
+    .delay-5 { transition-delay: 0.6s; }
+
+    /* Nav */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color 0.4s, box-shadow 0.4s; }
+    .nav.scrolled { border-color: rgba(0,0,0,0.06); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 22px var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 18px; letter-spacing: -1px; color: #1c1917; text-transform: uppercase; transition: opacity 0.2s; }
+    .nav-logo:hover { opacity: 0.65; }
+    .nav-links { display: flex; gap: 36px; align-items: center; }
+    .nav-link { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: -0.3px; color: var(--footer-txt); text-transform: uppercase; position: relative; transition: color 0.25s; }
+    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--dark); transition: width 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .nav-link:hover { color: var(--dark); } .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: #1c1917; border-bottom: 2px solid #1c1917; padding-bottom: 4px; } .nav-link.active::after { display: none; }
+    .nav-cta { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--white); background: var(--steel); padding: 10px 28px; transition: background 0.25s, transform 0.2s; }
+    .nav-cta:hover { background: var(--dark); transform: translateY(-1px); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--dark); transition: all 0.3s; }
+
+    /* Hero */
+    .hero-wrapper { padding-top: 140px; max-width: var(--max-w); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+    .hero { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
+    .hero-title { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(96px,13vw,192px); line-height: 0.85; letter-spacing: -0.05em; text-transform: uppercase; color: var(--dark); }
+    .hero-title .line { display: block; }
+    .hero-title .line-edit { padding-left: clamp(24px,3.5vw,96px); }
+    .hero-title .line-year { color: transparent; -webkit-text-stroke: 2px var(--dark); }
+    .hero-right { max-width: 360px; flex-shrink: 0; padding-bottom: 28px; }
+    .hero-desc { font-size: 17px; line-height: 1.62; color: var(--muted); margin-bottom: 24px; }
+    .hero-scroll { display: flex; align-items: center; gap: 16px; }
+    .hero-scroll-label { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--steel); }
+    .hero-scroll-line { width: 48px; height: 1px; background: var(--steel); }
+
+    /* Meta bar */
+    .meta-bar-wrapper { max-width: var(--max-w); margin: 65px auto 0; padding: 0 var(--gutter) 48px; }
+    .meta-bar { background: rgba(255,255,255,0.8); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: var(--shadow); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .meta-items { display: flex; gap: 48px; flex-wrap: wrap; }
+    .meta-item-label { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--label); margin-bottom: 4px; }
+    .meta-item-value { font-size: 14px; color: var(--dark); line-height: 1.43; }
+
+    /* Projects */
+    .projects-section { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter) 96px; display: flex; flex-direction: column; gap: 192px; }
+    .project-article { display: flex; gap: 48px; align-items: flex-start; }
+    .project-article.reverse { flex-direction: row-reverse; }
+    .project-image-block { flex: 0 0 auto; overflow: hidden; background: var(--bg-alt); position: relative; }
+    .project-image-block > img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .project-image-block:hover > img { transform: scale(1.03); }
+    .p1-img { width: min(45vw,570px); aspect-ratio: 4/5; }
+    .p2-img { flex: 1; aspect-ratio: 16/9; }
+
+    /* P01 overlay */
+    .p1-overlay { position: absolute; inset: 0; overflow: hidden; }
+    .p1-overlay img { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; object-fit: cover; pointer-events: none; transform: translate(-50%,-50%); transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .project-image-block:hover .p1-overlay img { transform: translate(-50%,-50%) scale(1.04); }
+
+    .project-text { flex: 1; padding-top: 48px; }
+    .project-number { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 3.6px; text-transform: uppercase; color: var(--label); margin-bottom: 12px; }
+    .project-title { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(48px,5vw,72px); line-height: 1; letter-spacing: -0.05em; text-transform: uppercase; color: var(--dark); margin-bottom: 24px; }
+    .project-desc { font-size: 18px; line-height: 1.62; color: var(--muted); max-width: 420px; margin-bottom: 40px; }
+    .project-link { display: inline-flex; align-items: center; gap: 16px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--dark); cursor: pointer; transition: gap 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .project-link:hover { gap: 24px; }
+    .project-link svg { transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .project-link:hover svg { transform: translateX(4px); }
+
+    /* Project 03 centred */
+    .project-centered { display: flex; flex-direction: column; align-items: center; max-width: 1024px; margin: 0 auto; width: 100%; }
+    .p3-image-grid { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 64px; overflow: hidden; }
+    .p3-image-grid img { width: 100%; aspect-ratio: 1.41; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .p3-image-grid:hover img { transform: scale(1.02); }
+    .project-centered-text { text-align: center; max-width: 640px; }
+    .project-centered-text .project-title { font-size: clamp(56px,7vw,96px); margin-bottom: 24px; }
+    .project-centered-text .project-desc { margin: 0 auto 40px; font-size: 18px; }
+    .btn-primary { display: inline-block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--white); background: var(--steel); padding: 16px 48px; transition: background 0.25s, transform 0.2s; }
+    .btn-primary:hover { background: var(--dark); transform: translateY(-2px); }
+
+    /* Marquee */
+    .marquee-section { background: var(--steel); padding: 48px 0; overflow: hidden; }
+    .marquee-track { display: flex; width: max-content; animation: marquee 18s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-text { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(48px,6.5vw,96px); line-height: 1; letter-spacing: -0.05em; text-transform: uppercase; color: var(--white); opacity: 0.18; white-space: nowrap; padding-right: 80px; transition: opacity 0.3s; }
+    .marquee-section:hover .marquee-text { opacity: 0.28; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* Bento */
+    .bento-section { background: var(--bg-alt); max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); }
+    .bento-cell { padding: 48px; border-right: 1px solid rgba(117,124,125,0.12); }
+    .bento-cell:last-child { border-right: none; }
+    .bento-title { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(24px,2.5vw,36px); letter-spacing: -0.025em; text-transform: uppercase; color: var(--dark); margin-bottom: 24px; }
+    .bento-body { font-size: 15px; line-height: 1.65; color: var(--muted); }
+
+    /* Contact section */
+    .contact-section { max-width: var(--max-w); margin: 0 auto; padding: 96px var(--gutter); display: flex; gap: 64px; align-items: flex-start; }
+    .contact-left { flex: 1; min-width: 0; }
+    .contact-eyebrow { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--label); margin-bottom: 16px; }
+    .contact-heading { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(48px,5.5vw,72px); letter-spacing: -0.05em; text-transform: uppercase; color: var(--dark); line-height: 1; margin-bottom: 24px; }
+    .contact-desc { font-size: 17px; line-height: 1.65; color: var(--muted); max-width: 420px; margin-bottom: 48px; padding-top: 16px; }
+    .contact-socials { display: flex; gap: 32px; flex-wrap: wrap; }
+    .contact-social { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--dark); position: relative; transition: color 0.2s; }
+    .contact-social::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--dark); transition: width 0.3s; }
+    .contact-social:hover::after { width: 100%; }
+    .contact-right { flex: 1; min-width: 0; }
+    .form-stack { display: flex; flex-direction: column; gap: 20px; }
+    .field-label { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--dark); margin-bottom: 9px; }
+    .field-input, .field-select, .field-textarea { width: 100%; background: #f3f3f3; border: none; outline: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; color: var(--dark); padding: 0 14px; transition: background 0.2s, box-shadow 0.2s; appearance: none; -webkit-appearance: none; }
+    .field-input, .field-select { height: 56px; }
+    .field-textarea { height: 146px; padding: 14px; resize: none; }
+    .field-input::placeholder, .field-textarea::placeholder { color: #aaa; }
+    .field-input:focus, .field-select:focus, .field-textarea:focus { background: #ebebeb; box-shadow: inset 0 0 0 1.5px rgba(45,52,53,0.15); }
+    .select-wrapper { position: relative; }
+    .field-select { cursor: pointer; color: #aaa; padding-right: 44px; }
+    .field-select.has-value { color: var(--dark); }
+    .field-select option { color: var(--dark); background: #f9f9f9; }
+    .select-chevron { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; transition: transform 0.25s; }
+    .select-wrapper:focus-within .select-chevron { transform: translateY(-50%) rotate(180deg); }
+    .form-submit { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .btn-submit { display: inline-block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--white); background: var(--dark); border: none; padding: 16px 48px; cursor: pointer; transition: background 0.25s, transform 0.2s; align-self: flex-start; }
+    .btn-submit:hover { background: var(--steel); transform: translateY(-2px); }
+    .form-terms { font-size: 11px; line-height: 1.6; color: var(--muted); }
+    .form-terms a { text-decoration: underline; }
+
+    /* Footer */
+    .footer { background: var(--footer-bg); padding: 64px var(--gutter); }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 32px; }
+    .footer-brand { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.35px; text-transform: uppercase; color: #1c1917; margin-bottom: 8px; }
+    .footer-copy { font-size: 13px; letter-spacing: 0.35px; color: var(--footer-txt); text-transform: uppercase; }
+    .footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
+    .footer-link { font-size: 14px; letter-spacing: 0.35px; color: var(--footer-txt); transition: color 0.2s; position: relative; }
+    .footer-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--dark); transition: width 0.3s; }
+    .footer-link:hover { color: var(--dark); } .footer-link:hover::after { width: 100%; }
+
+    /* Cursor */
+    .cursor-dot { width: 6px; height: 6px; background: var(--dark); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width 0.3s, height 0.3s, opacity 0.3s, background 0.3s, border 0.3s; opacity: 0; }
+    @media (hover: none) { .cursor-dot { display: none; } }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      :root { --gutter: 32px; }
+      .projects-section { gap: 120px; }
+      .p1-img { width: min(46vw,420px); }
+      .bento-section { grid-template-columns: 1fr; }
+      .bento-cell { border-right: none; border-bottom: 1px solid rgba(117,124,125,0.12); }
+      .bento-cell:last-child { border-bottom: none; }
+      .contact-section { gap: 48px; }
+    }
+    @media (max-width: 768px) {
+      :root { --gutter: 20px; }
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; gap: 20px; position: absolute; top: 100%; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); padding: 24px var(--gutter) 32px; border-top: 1px solid rgba(0,0,0,0.06); }
+      .nav-cta { display: none; } .nav-toggle { display: flex; }
+      .hero-wrapper { padding-top: 110px; }
+      .hero { flex-direction: column; align-items: flex-start; gap: 40px; }
+      .hero-right { max-width: 100%; padding-bottom: 0; }
+      .hero-title { font-size: clamp(72px,18vw,120px); }
+      .project-article, .project-article.reverse { flex-direction: column; gap: 32px; }
+      .p1-img, .p2-img { width: 100%; aspect-ratio: 4/3; }
+      .project-text { padding-top: 0; }
+      .projects-section { gap: 80px; }
+      .p3-image-grid { grid-template-columns: 1fr; }
+      .p3-image-grid img { aspect-ratio: 4/3; }
+      .meta-items { gap: 24px; }
+      .contact-section { flex-direction: column; gap: 40px; padding: 64px var(--gutter); }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: clamp(56px,16vw,88px); }
+      .project-title { font-size: 42px; }
+      .meta-items { flex-direction: column; gap: 16px; }
+      .contact-heading { font-size: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- Nav -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Tangent Design</a>
+      <div class="nav-links" id="navLinks">
+        <a href="work.html" class="nav-link">Work</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <a href="contact.html" class="nav-cta">Get In Touch</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <div class="hero-wrapper">
+      <section class="hero" id="work">
+        <div class="hero-heading">
+          <h1 class="hero-title fade-up">
+            <span class="line">THE</span>
+            <span class="line line-edit">EDIT</span>
+            <span class="line line-year">2026</span>
+          </h1>
+        </div>
+        <div class="hero-right fade-up delay-2">
+          <p class="hero-desc">A curated archive of visual identities, websites and marketing materials. We define the intersection between the humans and cutting edge technology.</p>
+          <a href="#dales-peaks" class="hero-scroll">
+            <span class="hero-scroll-label">Scroll to Discover</span>
+            <div class="hero-scroll-line"></div>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <!-- Meta bar -->
+    <div class="meta-bar-wrapper fade-up delay-3">
+      <div class="meta-bar">
+        <div class="meta-items">
+          <div class="meta-item"><div class="meta-item-label">Role</div><div class="meta-item-value">AI Designer</div></div>
+          <div class="meta-item"><div class="meta-item-label">Studio</div><div class="meta-item-value">Tangent Design</div></div>
+          <div class="meta-item"><div class="meta-item-label">Location</div><div class="meta-item-value">Malvern UK</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <section class="projects-section">
+
+      <!-- Project 01 -->
+      <article class="project-article" id="dales-peaks">
+        <a href="dales-and-peaks-project.html" class="project-image-block p1-img fade-left">
+          <img src="images/Minimalist architectural detail.png" alt="Dales & Peaks brand collage" />
+          <div class="p1-overlay">
+            <img src="images/Minimalist architectural detail.png" alt="" aria-hidden="true" />
+          </div>
+        </a>
+        <div class="project-text fade-right delay-2">
+          <p class="project-number">01 / Branding</p>
+          <h2 class="project-title">DALES &amp;<br>PEAKS</h2>
+          <p class="project-desc">A total brand redesign for a premium estate agent located in the peak district. We focussed on bold symmetrical shapes to work on web and media.</p>
+          <a href="dales-and-peaks-project.html" class="project-link">View Case Study
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M1 7.5h13M8.5 2l6.5 5.5L8.5 13" stroke="#2d3435" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 02 -->
+      <article class="project-article">
+        <div class="project-text fade-left delay-2">
+          <p class="project-number">02 / Website</p>
+          <h2 class="project-title">LUXURY<br>PROPERTY</h2>
+          <p class="project-desc">Creating a luxury showcase website for a company specialising in off market luxury property in London.</p>
+          <a href="housely-project.html" class="project-link">View Case Study
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M1 7.5h13M8.5 2l6.5 5.5L8.5 13" stroke="#2d3435" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <a href="housely-project.html" class="project-image-block p2-img fade-right">
+          <img src="images/luxury-property.jpg" alt="Luxury property" />
+        </a>
+      </article>
+
+      <!-- Project 03 -->
+      <article class="project-centered">
+        <a href="fine-and-country-print-project.html" class="p3-image-grid fade-up">
+          <img src="images/print-01.jpg" alt="Print material 1" />
+          <img src="images/print-02.jpg" alt="Print material 2" />
+          <img src="images/print-03.jpg" alt="Print material 3" />
+          <img src="images/print-04.jpg" alt="Print material 4" />
+        </a>
+        <div class="project-centered-text fade-up delay-2">
+          <p class="project-number">03 / Editorial</p>
+          <h2 class="project-title">PRINT<br>MATERIAL</h2>
+          <p class="project-desc">A magazine layout design for Fine &amp; Country, portraying their property and luxury lifestyle.</p>
+          <a href="fine-and-country-print-project.html" class="btn-primary">Explore Archive</a>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Marquee -->
+    <section class="marquee-section" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-text">AVAILABLE FOR FREELANCE&nbsp;&nbsp;&nbsp;&nbsp;—&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="marquee-text">AVAILABLE FOR FREELANCE&nbsp;&nbsp;&nbsp;&nbsp;—&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="marquee-text">AVAILABLE FOR FREELANCE&nbsp;&nbsp;&nbsp;&nbsp;—&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="marquee-text">AVAILABLE FOR FREELANCE&nbsp;&nbsp;&nbsp;&nbsp;—&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </div>
+    </section>
+
+    <!-- Bento -->
+    <section class="bento-section" id="about">
+      <div class="bento-cell fade-up">
+        <h3 class="bento-title">Strategy</h3>
+        <p class="bento-body">We don't just build websites; we construct digital legacies. Our methodology is rooted in the Swiss grid and modern typography principles.</p>
+      </div>
+      <div class="bento-cell fade-up delay-2">
+        <h3 class="bento-title">Execution</h3>
+        <p class="bento-body">Pixel-perfect implementation using the latest in front-end architecture. We prioritize speed, accessibility, and high-impact motion.</p>
+      </div>
+      <div class="bento-cell fade-up delay-3">
+        <h3 class="bento-title">Philosophy</h3>
+        <p class="bento-body">"Less, but better." Dieter Rams' mantra is the cornerstone of our studio. We strip away the noise to find the core message of your brand.</p>
+      </div>
+    </section>
+
+    <!-- Contact section -->
+    <section id="contact">
+      <div class="contact-section">
+        <div class="contact-left fade-left">
+          <p class="contact-eyebrow">Enquiries</p>
+          <h2 class="contact-heading">CONTACT ME.</h2>
+          <p class="contact-desc">Seeking to build something enduring? Let's discuss your vision. Currently accepting selective commissions for 2026.</p>
+          <div class="contact-socials">
+            <a href="https://dribbble.com/vince-sneed" class="contact-social" target="_blank" rel="noopener noreferrer">Dribbble</a>
+            <a href="https://x.com/SneedVince26" class="contact-social" target="_blank" rel="noopener noreferrer">X</a>
+            <a href="https://www.linkedin.com/in/vincentsneed/" class="contact-social" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+        </div>
+        <div class="contact-right fade-right delay-2">
+          <form class="form-stack" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="713c5b91-4dcd-4a78-b682-39bb549d36de" />
+            <div>
+              <div class="field-label">Your Name:</div>
+              <input class="field-input" name="name" type="text" placeholder="Enter your name here" autocomplete="name" />
+            </div>
+            <div>
+              <div class="field-label">Your Email:</div>
+              <input class="field-input" name="email" type="email" placeholder="Enter your email here" autocomplete="email" />
+            </div>
+            <div>
+              <div class="field-label">I Am Interested In:</div>
+              <div class="select-wrapper">
+                <select class="field-select" id="interestIndex" name="service">
+                  <option value="" disabled selected hidden>Select from the dropdown</option>
+                  <option value="branding">Branding</option>
+                  <option value="websites">Websites</option>
+                  <option value="ai-workflows">Ai Workflows</option>
+                  <option value="marketing">Marketing</option>
+                </select>
+                <svg class="select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="#757c7d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <div class="field-label">Message Me:</div>
+              <textarea class="field-textarea" name="message" placeholder="Enter your message here"></textarea>
+            </div>
+            <div class="form-submit">
+              <button class="btn-submit" type="submit">Submit Form</button>
+              <p class="form-terms">By clicking the submit button you agree to our <a href="#">Terms and Conditions</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Tangent Design Editorial</div>
+        <div class="footer-copy">© 2026 Tangent Design. All rights reserved.</div>
+      </div>
+      <nav class="footer-links" aria-label="Social links">
+        <a href="mailto:vincentsneed26@gmail.com" class="footer-link">Email</a>
+        <a href="https://x.com/SneedVince26" class="footer-link" target="_blank" rel="noopener noreferrer">X</a>
+        <a href="https://www.linkedin.com/in/vincentsneed/" class="footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const animEls = document.querySelectorAll('.fade-up,.fade-left,.fade-right');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { rootMargin: '-60px 0px', threshold: 0.08 });
+    animEls.forEach(el => observer.observe(el));
+    setTimeout(() => {
+      document.querySelectorAll('.hero-wrapper .fade-up, .meta-bar-wrapper.fade-up').forEach(el => el.classList.add('visible'));
+    }, 80);
+
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
+
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      const spans = toggle.querySelectorAll('span');
+      if (open) { spans[0].style.transform='translateY(7px) rotate(45deg)'; spans[1].style.opacity='0'; spans[2].style.transform='translateY(-7px) rotate(-45deg)'; }
+      else { spans.forEach(s => { s.style.transform=''; s.style.opacity=''; }); }
+    });
+    navLinks.querySelectorAll('a').forEach(l => l.addEventListener('click', () => { navLinks.classList.remove('open'); toggle.querySelectorAll('span').forEach(s => { s.style.transform=''; s.style.opacity=''; }); }));
+
+    const sel = document.getElementById('interestIndex');
+    if (sel) sel.addEventListener('change', () => sel.classList.toggle('has-value', sel.value !== ''));
+
+    const dot = document.getElementById('cursorDot');
+    document.addEventListener('mousemove', e => { dot.style.opacity='1'; dot.style.left=e.clientX+'px'; dot.style.top=e.clientY+'px'; });
+    document.querySelectorAll('a,button,.project-image-block,select,input,textarea').forEach(el => {
+      el.addEventListener('mouseenter', () => { dot.style.width='24px'; dot.style.height='24px'; dot.style.background='transparent'; dot.style.border='1.5px solid var(--dark)'; });
+      el.addEventListener('mouseleave', () => { dot.style.width='6px'; dot.style.height='6px'; dot.style.background='var(--dark)'; dot.style.border='none'; });
+    });
+    document.addEventListener('mouseleave', () => { dot.style.opacity='0'; });
+
+    // ── Form submission ──
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const name    = this.querySelector('[name="name"]').value.trim();
+        const email   = this.querySelector('[name="email"]').value.trim();
+        const service = this.querySelector('[name="service"]') ? this.querySelector('[name="service"]').value : 'N/A';
+        const message = this.querySelector('[name="message"]').value.trim();
+        if (!name || !email || !message) {
+          [['name',name],['email',email],['message',message]].forEach(([n,v]) => {
+            const el = this.querySelector('[name="'+n+'"]');
+            if (el) el.style.boxShadow = v ? '' : 'inset 0 0 0 1.5px rgba(200,50,50,0.5)';
+          });
+          return;
+        }
+        const btn = this.querySelector('.btn-submit');
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+        try {
+          const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(this) });
+          const result = await res.json();
+          if (result.success) {
+            btn.textContent = '✓ Message Sent';
+            btn.style.background = '#4a7c59';
+            btn.style.transform = 'none';
+            contactForm.reset();
+            const sel = document.getElementById('interestIndex');
+            if (sel) sel.classList.remove('has-value');
+          } else {
+            btn.textContent = 'Something went wrong — try again';
+            btn.style.background = '#b94040';
+            btn.disabled = false;
+          }
+        } catch {
+          btn.textContent = 'Something went wrong — try again';
+          btn.style.background = '#b94040';
+          btn.disabled = false;
+        }
+        this.querySelectorAll('input, textarea').forEach(el => el.style.boxShadow = '');
+      });
+      contactForm.querySelectorAll('input, textarea').forEach(el => {
+        el.addEventListener('input', () => { el.style.boxShadow = ''; });
+      });
+    }
+  </script>
+</body>
+</html>
