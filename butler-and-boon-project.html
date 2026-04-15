@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Butler &amp; Boon — Tangent Design</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #f9f9f9; color: #2d3435; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    :root {
+      --dark: #2d3435; --muted: #5a6061; --label: #757c7d; --steel: #5e5e5e;
+      --bg: #f9f9f9; --bg-alt: #f2f4f4; --white: #f8f8f8;
+      --footer-bg: #f5f5f4; --footer-txt: #78716c;
+      --nav-bg: rgba(255,255,255,0.82); --max-w: 1280px; --gutter: 48px;
+    }
+
+    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .fade-left.visible { opacity: 1; transform: translateX(0); }
+    .fade-right { opacity: 0; transform: translateX(32px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .fade-right.visible { opacity: 1; transform: translateX(0); }
+    .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; } .delay-4 { transition-delay: 0.45s; } .delay-5 { transition-delay: 0.6s; }
+
+    /* ─── Nav ─── */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color 0.4s, box-shadow 0.4s; }
+    .nav.scrolled { border-color: rgba(0,0,0,0.06); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 22px var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 18px; letter-spacing: -1px; color: #1c1917; text-transform: uppercase; transition: opacity 0.2s; }
+    .nav-logo:hover { opacity: 0.65; }
+    .nav-links { display: flex; gap: 36px; align-items: center; }
+    .nav-link { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: -0.3px; color: var(--footer-txt); text-transform: uppercase; position: relative; transition: color 0.25s; }
+    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--dark); transition: width 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .nav-link:hover { color: var(--dark); } .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: #1c1917; border-bottom: 2px solid #1c1917; padding-bottom: 4px; } .nav-link.active::after { display: none; }
+    .nav-cta { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--white); background: var(--steel); padding: 10px 28px; transition: background 0.25s, transform 0.2s; }
+    .nav-cta:hover { background: var(--dark); transform: translateY(-1px); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--dark); transition: all 0.3s; }
+
+    /* ─── Page ─── */
+    .page-main { padding-top: 88px; }
+
+    /* ─── Hero Split ─── */
+    .hero-split { max-width: var(--max-w); margin: 0 auto; padding: 48px var(--gutter) 0; display: flex; gap: 64px; align-items: flex-start; }
+
+    /* ─── Sticky Sidebar ─── */
+    .detail-sidebar { width: 395px; flex-shrink: 0; position: sticky; top: 108px; align-self: flex-start; padding-bottom: 40px; }
+    .sidebar-eyebrow { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--label); margin-bottom: 16px; }
+    .sidebar-title { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(48px,5vw,72px); line-height: 1; letter-spacing: -0.05em; text-transform: uppercase; color: var(--dark); margin-bottom: 20px; }
+    .sidebar-desc { font-size: 17px; line-height: 1.65; color: var(--muted); margin-bottom: 48px; padding-top: 16px; }
+    .meta-table { border-top: 1px solid rgba(173,179,180,0.18); padding-top: 40px; display: flex; flex-direction: column; gap: 20px; }
+    .meta-row { display: flex; align-items: baseline; justify-content: space-between; }
+    .meta-key { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--label); }
+    .meta-val { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.1px; text-transform: uppercase; color: var(--dark); text-align: right; }
+    .back-link { display: inline-flex; align-items: center; gap: 10px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--label); margin-bottom: 40px; transition: color 0.2s, gap 0.3s; }
+    .back-link:hover { color: var(--dark); gap: 14px; }
+    .back-link svg { transition: transform 0.3s; } .back-link:hover svg { transform: translateX(-3px); }
+
+    /* ─── Image Stack ─── */
+    .image-stack { flex: 1; min-width: 0; display: flex; flex-direction: column; padding-bottom: 96px; }
+    .stack-img { width: 100%; height: 408px; overflow: hidden; flex-shrink: 0; position: relative; margin-bottom: 2px; }
+    .stack-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .stack-img:hover img { transform: scale(1.03); }
+    .stack-img:last-child { margin-bottom: 0; }
+
+    /* ─── Other Work ─── */
+    .other-work { background: var(--bg-alt); padding: 128px var(--gutter); }
+    .other-work-inner { max-width: var(--max-w); margin: 0 auto; display: flex; flex-direction: column; gap: 64px; }
+    .other-work-header { display: flex; align-items: flex-end; justify-content: space-between; }
+    .other-work-title { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 36px; letter-spacing: -0.05em; text-transform: uppercase; color: var(--dark); }
+    .other-work-link { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--steel); position: relative; transition: color 0.2s; }
+    .other-work-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--dark); transition: width 0.3s; }
+    .other-work-link:hover { color: var(--dark); } .other-work-link:hover::after { width: 100%; }
+    .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .project-card { display: flex; flex-direction: column; gap: 20px; }
+    .card-image { width: 100%; height: 333px; overflow: hidden; background: white; position: relative; flex-shrink: 0; display: block; }
+    .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .card-image:hover img { transform: scale(1.04); }
+    .card-meta { display: flex; align-items: flex-start; justify-content: space-between; }
+    .card-title { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -0.025em; text-transform: uppercase; color: var(--dark); margin-bottom: 4px; }
+    .card-category { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--label); }
+    .card-arrow { flex-shrink: 0; width: 15px; height: 15px; margin-top: 2px; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .project-card:hover .card-arrow { transform: translate(3px,-3px); }
+
+    /* ─── Contact ─── */
+    .contact-section { max-width: var(--max-w); margin: 0 auto; padding: 96px var(--gutter); display: flex; gap: 64px; align-items: flex-start; }
+    .contact-left { flex: 1; min-width: 0; }
+    .contact-eyebrow { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--label); margin-bottom: 16px; }
+    .contact-heading { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(48px,5.5vw,72px); letter-spacing: -0.05em; text-transform: uppercase; color: var(--dark); line-height: 1; margin-bottom: 24px; }
+    .contact-desc { font-size: 17px; line-height: 1.65; color: var(--muted); max-width: 420px; margin-bottom: 48px; padding-top: 16px; }
+    .contact-socials { display: flex; gap: 32px; flex-wrap: wrap; }
+    .contact-social { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--dark); position: relative; transition: color 0.2s; }
+    .contact-social::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--dark); transition: width 0.3s; }
+    .contact-social:hover::after { width: 100%; }
+    .contact-right { flex: 1; min-width: 0; }
+    .form-stack { display: flex; flex-direction: column; gap: 20px; }
+    .field-group { display: flex; flex-direction: column; }
+    .field-label { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--dark); margin-bottom: 9px; }
+    .field-input, .field-select, .field-textarea { width: 100%; background: #f3f3f3; border: none; outline: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; color: var(--dark); padding: 0 14px; transition: background 0.2s, box-shadow 0.2s; appearance: none; -webkit-appearance: none; }
+    .field-input, .field-select { height: 56px; }
+    .field-textarea { height: 146px; padding: 14px; resize: none; }
+    .field-input::placeholder, .field-textarea::placeholder { color: #aaa; }
+    .field-input:focus, .field-select:focus, .field-textarea:focus { background: #ebebeb; box-shadow: inset 0 0 0 1.5px rgba(45,52,53,0.15); }
+    .select-wrapper { position: relative; }
+    .field-select { cursor: pointer; color: #aaa; padding-right: 44px; }
+    .field-select.has-value { color: var(--dark); }
+    .field-select option { color: var(--dark); background: #f9f9f9; }
+    .select-chevron { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; transition: transform 0.25s; }
+    .select-wrapper:focus-within .select-chevron { transform: translateY(-50%) rotate(180deg); }
+    .form-submit { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .btn-submit { display: inline-block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--white); background: var(--dark); border: none; padding: 16px 48px; cursor: pointer; transition: background 0.25s, transform 0.2s; align-self: flex-start; }
+    .btn-submit:hover { background: var(--steel); transform: translateY(-2px); }
+    .form-terms { font-size: 11px; line-height: 1.6; color: var(--muted); }
+    .form-terms a { text-decoration: underline; }
+
+    /* ─── Footer ─── */
+    .footer { background: var(--footer-bg); padding: 64px var(--gutter); }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 32px; }
+    .footer-brand { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.35px; text-transform: uppercase; color: #1c1917; margin-bottom: 8px; }
+    .footer-copy { font-size: 13px; letter-spacing: 0.35px; color: var(--footer-txt); text-transform: uppercase; }
+    .footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
+    .footer-link { font-size: 14px; letter-spacing: 0.35px; color: var(--footer-txt); transition: color 0.2s; position: relative; }
+    .footer-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--dark); transition: width 0.3s; }
+    .footer-link:hover { color: var(--dark); } .footer-link:hover::after { width: 100%; }
+
+    /* ─── Cursor ─── */
+    .cursor-dot { width: 6px; height: 6px; background: var(--dark); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width 0.3s, height 0.3s, opacity 0.3s, background 0.3s, border 0.3s; opacity: 0; }
+    @media (hover: none) { .cursor-dot { display: none; } }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 1024px) { :root { --gutter: 32px; } .detail-sidebar { width: 320px; } }
+    @media (max-width: 768px) {
+      :root { --gutter: 20px; }
+      .hero-split { flex-direction: column; gap: 40px; padding-top: 32px; }
+      .detail-sidebar { position: static; width: 100%; }
+      .project-grid { grid-template-columns: 1fr; }
+      .contact-section { flex-direction: column; gap: 48px; }
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; gap: 20px; position: absolute; top: 100%; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); padding: 24px var(--gutter) 32px; border-top: 1px solid rgba(0,0,0,0.06); }
+      .nav-cta { display: none; } .nav-toggle { display: flex; }
+      .stack-img { height: 260px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .other-work { padding: 80px var(--gutter); }
+    }
+    @media (max-width: 480px) { .sidebar-title { font-size: 48px; } .contact-heading { font-size: 44px; } }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Tangent Design</a>
+      <div class="nav-links" id="navLinks">
+        <a href="work.html" class="nav-link active">Work</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <a href="contact.html" class="nav-cta">Get In Touch</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="page-main">
+
+    <!-- Hero Split -->
+    <div class="hero-split">
+
+      <!-- Sticky Sidebar -->
+      <aside class="detail-sidebar fade-left">
+        <a href="work.html" class="back-link">
+          <svg width="14" height="14" viewBox="0 0 15 15" fill="none"><path d="M14 7.5H1M6.5 2L1 7.5 6.5 13" stroke="#757c7d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          All Projects
+        </a>
+        <p class="sidebar-eyebrow">Project Identity</p>
+        <h1 class="sidebar-title">BUTLER<br>&amp; BOON</h1>
+        <p class="sidebar-desc">A new brand identity for Butler and Boon, incorporating geometric shapes which work well as an icon on websites or a logo mark for print materials.</p>
+        <div class="meta-table">
+          <div class="meta-row">
+            <span class="meta-key">Role</span>
+            <span class="meta-val">Brand Identity</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key">Studio</span>
+            <span class="meta-val">Tangent Design</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key">Location</span>
+            <span class="meta-val">Icknield Way, UK</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key">Year</span>
+            <span class="meta-val">2026</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Image Stack -->
+      <div class="image-stack">
+        <div class="stack-img fade-up"><img src="images/butler-1.png" alt="Butler &amp; Boon – 1" /></div>
+        <div class="stack-img fade-up delay-1"><img src="images/butler-2.png" alt="Butler &amp; Boon – 2" /></div>
+        <div class="stack-img fade-up delay-2"><img src="images/butler-3.png" alt="Butler &amp; Boon – 3" /></div>
+        <div class="stack-img fade-up delay-1"><img src="images/butler-4.png" alt="Butler &amp; Boon – 4" /></div>
+        <div class="stack-img fade-up"><img src="images/butler-5.png" alt="Butler &amp; Boon – 5" /></div>
+        <div class="stack-img fade-up delay-1"><img src="images/butler-6.png" alt="Butler &amp; Boon – 6" /></div>
+        <div class="stack-img fade-up"><img src="images/butler-7.png" alt="Butler &amp; Boon – 7" /></div>
+        <div class="stack-img fade-up delay-1"><img src="images/butler-8.png" alt="Butler &amp; Boon – 8" /></div>
+        <div class="stack-img fade-up delay-2"><img src="images/butler-9.png" alt="Butler &amp; Boon – 9" /></div>
+        <div class="stack-img fade-up delay-1"><img src="images/butler-10.png" alt="Butler &amp; Boon – 10" /></div>
+        <div class="stack-img fade-up"><img src="images/butler-11.png" alt="Butler &amp; Boon – 11" /></div>
+      </div>
+
+    </div>
+
+    <!-- Other Work -->
+    <section class="other-work">
+      <div class="other-work-inner">
+        <div class="other-work-header fade-up">
+          <h2 class="other-work-title">Other Work</h2>
+          <a href="work.html" class="other-work-link">View All Projects</a>
+        </div>
+        <div class="project-grid">
+          <article class="project-card fade-up delay-1">
+            <a href="dales-and-peaks-project.html" class="card-image">
+              <img src="images/dales-overview.png" alt="Dales &amp; Peaks brand identity" />
+            </a>
+            <div class="card-meta">
+              <div>
+                <div class="card-title">Dales &amp; Peaks</div>
+                <div class="card-category">Editorial / 2026</div>
+              </div>
+              <a href="dales-and-peaks-project.html">
+                <svg class="card-arrow" viewBox="0 0 15 15" fill="none"><path d="M1 14L14 1M14 1H4M14 1V11" stroke="#2d3435" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </article>
+          <article class="project-card fade-up delay-2">
+            <a href="housely-project.html" class="card-image">
+              <img src="images/housely-overview.png" alt="Housely website" />
+            </a>
+            <div class="card-meta">
+              <div>
+                <div class="card-title">Housely.com</div>
+                <div class="card-category">Websites / 2026</div>
+              </div>
+              <a href="https://vincentsneed26-afk.github.io/Luxury-property-home/" target="_blank">
+                <svg class="card-arrow" viewBox="0 0 15 15" fill="none"><path d="M1 14L14 1M14 1H4M14 1V11" stroke="#2d3435" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="contact-section">
+        <div class="contact-left fade-left">
+          <p class="contact-eyebrow">Enquiries</p>
+          <h2 class="contact-heading">CONTACT ME.</h2>
+          <p class="contact-desc">Seeking to build something enduring? Let's discuss your vision. Currently accepting selective commissions for 2026.</p>
+          <div class="contact-socials">
+            <a href="https://dribbble.com/vince-sneed" class="contact-social" target="_blank" rel="noopener noreferrer">Dribbble</a>
+            <a href="https://x.com/SneedVince26" class="contact-social" target="_blank" rel="noopener noreferrer">X</a>
+            <a href="https://www.linkedin.com/in/vincentsneed/" class="contact-social" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+        </div>
+        <div class="contact-right fade-right delay-2">
+          <form class="form-stack" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="713c5b91-4dcd-4a78-b682-39bb549d36de" />
+            <div class="field-group">
+              <div class="field-label">Your Name:</div>
+              <input class="field-input" name="name" id="name" type="text" placeholder="Enter your name here" autocomplete="name" />
+            </div>
+            <div class="field-group">
+              <div class="field-label">Your Email:</div>
+              <input class="field-input" name="email" id="email" type="email" placeholder="Enter your email here" autocomplete="email" />
+            </div>
+            <div class="field-group">
+              <div class="field-label">I Am Interested In:</div>
+              <div class="select-wrapper">
+                <select class="field-select" id="interest" name="service">
+                  <option value="" disabled selected hidden>Select from the dropdown</option>
+                  <option value="branding">Branding</option>
+                  <option value="websites">Websites</option>
+                  <option value="ai-workflows">Ai Workflows</option>
+                  <option value="marketing">Marketing</option>
+                </select>
+                <svg class="select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="#757c7d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div class="field-group">
+              <div class="field-label">Message Me:</div>
+              <textarea class="field-textarea" name="message" id="message" placeholder="Enter your message here"></textarea>
+            </div>
+            <div class="form-submit">
+              <button class="btn-submit" type="submit">Submit Form</button>
+              <p class="form-terms">By clicking the submit button you agree to our <a href="#">Terms and Conditions</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Tangent Design Editorial</div>
+        <div class="footer-copy">© 2026 Tangent Design. All rights reserved.</div>
+      </div>
+      <nav class="footer-links" aria-label="Social links">
+        <a href="mailto:vincentsneed26@gmail.com" class="footer-link">Email</a>
+        <a href="https://x.com/SneedVince26" class="footer-link" target="_blank" rel="noopener noreferrer">X</a>
+        <a href="https://www.linkedin.com/in/vincentsneed/" class="footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // ── Scroll animations ──
+    const animEls = document.querySelectorAll('.fade-up,.fade-left,.fade-right');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { rootMargin: '-50px 0px', threshold: 0.07 });
+    animEls.forEach(el => observer.observe(el));
+    setTimeout(() => {
+      document.querySelector('.detail-sidebar')?.classList.add('visible');
+      document.querySelectorAll('.image-stack .stack-img:first-child, .image-stack .stack-img:nth-child(2)').forEach(el => el.classList.add('visible'));
+    }, 80);
+
+    // ── Nav scroll ──
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
+
+    // ── Mobile nav toggle ──
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      const spans = toggle.querySelectorAll('span');
+      if (open) { spans[0].style.transform='translateY(7px) rotate(45deg)'; spans[1].style.opacity='0'; spans[2].style.transform='translateY(-7px) rotate(-45deg)'; }
+      else { spans.forEach(s => { s.style.transform=''; s.style.opacity=''; }); }
+    });
+
+    // ── Select colour feedback ──
+    const sel = document.getElementById('interest');
+    if (sel) sel.addEventListener('change', () => sel.classList.toggle('has-value', sel.value !== ''));
+
+    // ── Custom cursor ──
+    const dot = document.getElementById('cursorDot');
+    document.addEventListener('mousemove', e => { dot.style.opacity='1'; dot.style.left=e.clientX+'px'; dot.style.top=e.clientY+'px'; });
+    document.querySelectorAll('a,button,.card-image,.stack-img,select,input,textarea').forEach(el => {
+      el.addEventListener('mouseenter', () => { dot.style.width='24px'; dot.style.height='24px'; dot.style.background='transparent'; dot.style.border='1.5px solid var(--dark)'; });
+      el.addEventListener('mouseleave', () => { dot.style.width='6px'; dot.style.height='6px'; dot.style.background='var(--dark)'; dot.style.border='none'; });
+    });
+    document.addEventListener('mouseleave', () => { dot.style.opacity='0'; });
+
+    // ── Form submission ──
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const name    = document.getElementById('name').value.trim();
+        const email   = document.getElementById('email').value.trim();
+        const service = document.getElementById('interest').value;
+        const message = document.getElementById('message').value.trim();
+        if (!name || !email || !service || !message) {
+          [['name', name], ['email', email], ['message', message]].forEach(([id, val]) => {
+            document.getElementById(id).style.boxShadow = val ? '' : 'inset 0 0 0 1.5px rgba(200,50,50,0.5)';
+          });
+          document.getElementById('interest').style.boxShadow = service ? '' : 'inset 0 0 0 1.5px rgba(200,50,50,0.5)';
+          return;
+        }
+        const btn = this.querySelector('.btn-submit');
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+        try {
+          const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(this) });
+          const result = await res.json();
+          if (result.success) {
+            btn.textContent = '✓ Message Sent';
+            btn.style.background = '#4a7c59';
+            btn.style.transform = 'none';
+            contactForm.reset();
+            document.getElementById('interest').classList.remove('has-value');
+          } else {
+            btn.textContent = 'Something went wrong — try again';
+            btn.style.background = '#b94040';
+            btn.disabled = false;
+          }
+        } catch {
+          btn.textContent = 'Something went wrong — try again';
+          btn.style.background = '#b94040';
+          btn.disabled = false;
+        }
+        ['name','email','message','interest'].forEach(id => {
+          document.getElementById(id).style.boxShadow = '';
+        });
+      });
+      contactForm.querySelectorAll('input, select, textarea').forEach(el => {
+        el.addEventListener('input', () => { el.style.boxShadow = ''; });
+      });
+    }
+  </script>
+
+</body>
+</html>
