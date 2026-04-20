@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fine & Country Marketing — Tangent Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      font-family: 'Inter', sans-serif;
+      color: #2d3435;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 48px;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: -1px;
+      color: #1c1917;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: -0.4px;
+      color: #78716c;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a.active {
+      color: #1c1917;
+      border-bottom: 2px solid #1c1917;
+      padding-bottom: 6px;
+    }
+
+    .nav-links a:hover {
+      color: #1c1917;
+    }
+
+    .nav-cta {
+      background: #5e5e5e;
+      color: #f8f8f8;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.4px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      padding: 8px 32px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: #2d3435;
+    }
+
+    /* ── MAIN WRAPPER ── */
+    .page-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* ── HERO SPLIT SECTION ── */
+    .hero-section {
+      display: flex;
+      gap: 64px;
+      align-items: flex-start;
+      padding: 120px 48px 0;
+    }
+
+    /* Sticky Sidebar */
+    .sidebar {
+      width: 395px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 100px;
+      padding-bottom: 40px;
+    }
+
+    .sidebar-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .sidebar-top {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .label {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #757c7d;
+    }
+
+    .hero-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 72px;
+      line-height: 72px;
+      letter-spacing: -3.6px;
+      color: #2d3435;
+      text-transform: uppercase;
+    }
+
+    .hero-desc {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 29.25px;
+      color: #5a6061;
+      max-width: 448px;
+      padding-top: 16px;
+    }
+
+    /* Meta bar */
+    .meta-bar {
+      border-top: 1px solid rgba(173, 179, 180, 0.15);
+      padding-top: 49px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .meta-key {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #757c7d;
+    }
+
+    .meta-val {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      color: #2d3435;
+      text-transform: uppercase;
+    }
+
+    /* Image stack */
+    .image-stack {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      overflow: hidden;
+      padding-bottom: 96px;
+    }
+
+    .image-stack-item {
+      height: 1011px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image-stack-item img {
+      position: absolute;
+      width: 99.96%;
+      height: 101.32%;
+      left: 0.04%;
+      top: -1.3%;
+      max-width: none;
+      object-fit: cover;
+    }
+
+    /* ── OTHER WORK SECTION ── */
+    .other-work {
+      background: #f2f4f4;
+      padding: 128px 32px;
+      margin-top: 0;
+    }
+
+    .other-work-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .section-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 36px;
+      line-height: 40px;
+      letter-spacing: -1.8px;
+      color: #2d3435;
+      text-transform: uppercase;
+    }
+
+    .section-link {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #5e5e5e;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .section-link:hover {
+      color: #2d3435;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .project-card-bg {
+      background: white;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      height: 333px;
+      display: block;
+      cursor: pointer;
+    }
+
+    .project-card-bg img.bg-img {
+      position: absolute;
+      width: 100%;
+      height: 106.81%;
+      top: 0.12%;
+      left: 0;
+      max-width: none;
+      object-fit: cover;
+    }
+
+    /* Card 1 has a rotated overlay screenshot */
+    .card1-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .card1-overlay img {
+      position: absolute;
+      width: 100%;
+      height: 177.78%;
+      top: -38.89%;
+      left: 0;
+      max-width: none;
+      object-fit: cover;
+    }
+
+    .card1-screenshot-wrap {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 962px;
+      height: 686px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card1-screenshot {
+      transform: rotate(-11.96deg);
+      width: 874px;
+      height: 516px;
+      flex-shrink: 0;
+    }
+
+    .card1-screenshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .project-card-footer {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .project-card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5px;
+    }
+
+    .project-name {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 28px;
+      letter-spacing: -0.5px;
+      color: #2d3435;
+      text-transform: uppercase;
+    }
+
+    .project-category {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 15px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #757c7d;
+    }
+
+    .project-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    .project-icon img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ── CONTACT SECTION ── */
+    .contact-section {
+      display: flex;
+      gap: 64px;
+      align-items: flex-start;
+      padding: 80px 48px;
+    }
+
+    .contact-left {
+      flex: 1;
+      min-width: 0;
+      padding: 10px 0;
+    }
+
+    .contact-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-bottom: 205px;
+    }
+
+    .contact-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 72px;
+      line-height: 72px;
+      letter-spacing: -3.6px;
+      color: #2d3435;
+      text-transform: uppercase;
+    }
+
+    .contact-desc {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 29.25px;
+      color: #5a6061;
+      max-width: 448px;
+      padding-top: 16px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 32px;
+      padding-top: 32px;
+    }
+
+    .social-link {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #2d3435;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .social-link:hover {
+      color: #757c7d;
+    }
+
+    .contact-right {
+      flex: 1;
+      min-width: 0;
+      padding: 10px 0;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-bottom: 40px;
+    }
+
+    /* Form inputs */
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      width: 100%;
+    }
+
+    .form-label {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #2d3435;
+      line-height: 15px;
+    }
+
+    .form-input {
+      background: #f3f3f3;
+      border: none;
+      outline: none;
+      width: 100%;
+      padding: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 16px;
+      color: #2d3435;
+      height: 56px;
+      transition: background 0.2s;
+    }
+
+    .form-input::placeholder {
+      color: #aaa;
+    }
+
+    .form-input:focus {
+      background: #ebebeb;
+    }
+
+    .form-textarea {
+      background: #f3f3f3;
+      border: none;
+      outline: none;
+      width: 100%;
+      padding: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 16px;
+      color: #2d3435;
+      height: 146px;
+      resize: none;
+      transition: background 0.2s;
+    }
+
+    .form-textarea::placeholder {
+      color: #b7b7b7;
+    }
+
+    .form-textarea:focus {
+      background: #ebebeb;
+    }
+
+    .form-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .submit-btn {
+      background: #2d3435;
+      color: #f8f8f8;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      padding: 16px 48px;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: #1a1f20;
+    }
+
+    .form-terms {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 29.25px;
+      color: #5a6061;
+    }
+
+    .form-terms a {
+      color: #5a6061;
+      text-decoration: underline;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #f5f5f4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 64px 48px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-name {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 28px;
+      letter-spacing: 0.35px;
+      text-transform: uppercase;
+      color: #1c1917;
+    }
+
+    .footer-copy {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.35px;
+      color: #78716c;
+      text-transform: uppercase;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.35px;
+      color: #78716c;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #1c1917;
+    }
+
+    /* ── RESPONSIVE (basic) ── */
+    @media (max-width: 900px) {
+      .hero-section {
+        flex-direction: column;
+        padding: 100px 24px 0;
+      }
+
+      .sidebar {
+        width: 100%;
+        position: static;
+      }
+
+      .hero-title {
+        font-size: 48px;
+        line-height: 52px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-section {
+        flex-direction: column;
+        padding: 48px 24px;
+      }
+
+      .nav-inner {
+        padding: 16px 24px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 32px;
+        padding: 48px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Tangent Design</a>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Work</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Get In Touch</a>
+    </div>
+  </nav>
+
+  <!-- MAIN PAGE -->
+  <div class="page-wrapper">
+
+    <!-- HERO SPLIT -->
+    <section class="hero-section">
+
+      <!-- Sticky Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          <div class="sidebar-top">
+            <span class="label">Brand Identity</span>
+            <h1 class="hero-title">Fine &amp;<br>Country<br>Marketing</h1>
+            <p class="hero-desc">Fine and Country embodies a standard of unparalleled luxury. We enhance this aesthetic through the use of sophisticated editorial fonts and an abundance of white space.</p>
+          </div>
+
+          <div class="meta-bar">
+            <div class="meta-row">
+              <span class="meta-key">Role</span>
+              <span class="meta-val">Marketing</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Studio</span>
+              <span class="meta-val">Tangent Design</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Location</span>
+              <span class="meta-val">London, UK</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Year</span>
+              <span class="meta-val">2026</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Vertical Image Stack -->
+      <div class="image-stack">
+        <div class="image-stack-item">
+          <img src="images/fnc-five-nations-01.png" alt="Fine and Country Marketing — Image 1" />
+        </div>
+        <div class="image-stack-item">
+          <img src="images/fnc-five-nations-02.png" alt="Fine and Country Marketing — Image 2" />
+        </div>
+      </div>
+
+    </section>
+
+    <!-- OTHER WORK -->
+    <section class="other-work">
+      <div class="other-work-inner">
+        <div class="section-header">
+          <h2 class="section-title">Other Work</h2>
+          <a href="work.html" class="section-link">View All Projects</a>
+        </div>
+
+        <div class="projects-grid">
+
+          <!-- Card 1: Dales & Peaks -->
+          <div class="project-card">
+            <a href="dales-and-peaks-project.html" class="project-card-bg">
+              <!-- background fill image -->
+              <div class="card1-overlay">
+                <img class="bg-img" src="https://www.figma.com/api/mcp/asset/75b6964c-2954-44af-bb74-16deefb81a72" alt="Dales & Peaks background" />
+              </div>
+              <!-- rotated screenshot overlay -->
+              <div class="card1-screenshot-wrap">
+                <div class="card1-screenshot">
+                  <img src="https://www.figma.com/api/mcp/asset/84c02206-6c24-442d-808e-6fd446c1166b" alt="Dales & Peaks screenshot" />
+                </div>
+              </div>
+            </a>
+            <div class="project-card-footer">
+              <div class="project-card-info">
+                <p class="project-name">Dales &amp; Peaks</p>
+                <p class="project-category">Editorial / 2026</p>
+              </div>
+              <div class="project-icon">
+                <img src="https://www.figma.com/api/mcp/asset/a6492372-0526-4cf5-bb34-000e21d33aa7" alt="Arrow icon" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Housely.com -->
+          <div class="project-card">
+            <a href="housely-project.html" class="project-card-bg" style="overflow: hidden;">
+              <img class="bg-img" src="https://www.figma.com/api/mcp/asset/990e0d08-0384-43c7-8109-2a7e32fa1947" alt="Housely.com" style="height:106.81%; top:0.12%;" />
+            </a>
+            <div class="project-card-footer">
+              <div class="project-card-info">
+                <p class="project-name">Housely.com</p>
+                <p class="project-category">Websites / 2026</p>
+              </div>
+              <a href="https://vincentsneed26-afk.github.io/Luxury-property-home/" target="_blank" rel="noopener noreferrer" class="project-icon">
+                <img src="https://www.figma.com/api/mcp/asset/a6492372-0526-4cf5-bb34-000e21d33aa7" alt="Arrow icon" />
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+
+      <!-- Left: Contact info -->
+      <div class="contact-left">
+        <div class="contact-content">
+          <span class="label">Enquiries</span>
+          <h2 class="contact-title">Contact Me.</h2>
+          <p class="contact-desc">Seeking to build something enduring? Let's discuss your vision. Currently accepting selective commissions for 2026.</p>
+          <div class="social-links">
+            <a href="#" class="social-link">Instagram</a>
+            <a href="#" class="social-link">LinkedIn</a>
+            <a href="#" class="social-link">Dribbble</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="contact-right">
+        <form class="contact-form" onsubmit="return false;">
+
+          <div class="form-field">
+            <label class="form-label" for="name">Your Name:</label>
+            <input class="form-input" id="name" type="text" placeholder="Vincent Sneed" />
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="email">Your Email:</label>
+            <input class="form-input" id="email" type="email" placeholder="vincentsneed26@gmail.com" />
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="message">Message Me:</label>
+            <textarea class="form-textarea" id="message" placeholder="Enter your message here"></textarea>
+          </div>
+
+          <div class="form-bottom">
+            <button type="submit" class="submit-btn">Submit Form</button>
+            <p class="form-terms">
+              By clicking the submit button you agree to our
+              <a href="#">Terms and Conditions</a>
+            </p>
+          </div>
+
+        </form>
+      </div>
+
+    </section>
+
+  </div><!-- /page-wrapper -->
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <p class="footer-name">Tangent Design Editorial</p>
+      <p class="footer-copy">© 2026 Tangent Design. All Rights Reserved.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#">Email</a></li>
+      <li><a href="#">LinkedIn</a></li>
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">Twitter</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>
