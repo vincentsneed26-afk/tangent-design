@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Work — Tangent Design</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet" />
@@ -294,7 +293,6 @@
       margin-bottom: 9px;
     }
     .field-input,
-    .field-select,
     .field-textarea {
       width: 100%;
       background: #f3f3f3;
@@ -308,30 +306,7 @@
       appearance: none;
       -webkit-appearance: none;
     }
-    .field-input,
-    .field-select { height: 56px; }
-
-    /* Custom select wrapper */
-    .select-wrapper { position: relative; }
-    .field-select {
-      cursor: pointer;
-      color: #aaa;
-      padding-right: 44px;
-    }
-    .field-select.has-value { color: var(--dark); }
-    .field-select option { color: var(--dark); background: #f9f9f9; }
-    .select-chevron {
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      color: var(--label);
-      transition: transform 0.25s;
-    }
-    .select-wrapper:focus-within .select-chevron {
-      transform: translateY(-50%) rotate(180deg);
-    }
+    .field-input { height: 56px; }
     .field-textarea {
       height: 146px;
       padding: 14px;
@@ -491,10 +466,10 @@
       <!-- Row 1 -->
       <div class="work-row fade-up">
         <a href="dales-and-peaks-website.html" class="work-cell">
-          <img src="images/work-01.png" alt="Website and app design project" />
+          <img src="images/work-01.png" alt="Todd Anstee website and app design" />
         </a>
         <a href="dales-and-peaks-project.html" class="work-cell">
-          <img src="images/work-02.png" alt="Brand identity sketches" />
+          <img src="images/work-02.png" alt="Dales and Peaks brand identity sketches" />
         </a>
       </div>
 
@@ -504,7 +479,7 @@
           <img src="images/work-03.png" alt="Fine and Country editorial magazine spread" />
         </a>
         <a href="housely-project.html" class="work-cell">
-          <img src="images/work-04.png" alt="Luxury property London" />
+          <img src="images/work-04.png" alt="Housely luxury London property" />
         </a>
       </div>
 
@@ -514,7 +489,7 @@
           <img src="images/work-05.png" alt="Butler and Boon brand logo" />
         </a>
         <a href="the-ressolut-agency-project.html" class="work-cell">
-          <img src="images/work-06.png" alt="The Ressolut Agency project" />
+          <img src="images/work-06.png" alt="ResSolut Agency website mockup" />
         </a>
       </div>
 
@@ -533,9 +508,11 @@
       <!-- Row 5 -->
       <div class="work-row fade-up delay-4">
         <a href="todd-anstee-project.html" class="work-cell">
-          <img src="images/ta-project-overview.png" alt="Todd Anstee website project" />
+          <img src="images/ta-project-overview.png" alt="Todd Anstee project overview" />
         </a>
-        <div class="work-cell"></div>
+        <a href="madison-fox.html" class="work-cell">
+          <img src="images/madison-fox-08.png" alt="Madison Fox brand identity" />
+        </a>
       </div>
 
     </section>
@@ -551,68 +528,32 @@
           Seeking to build something enduring? Let's discuss your vision. Currently accepting selective commissions for 2026.
         </p>
         <div class="contact-socials fade-up delay-3">
-          <a href="https://dribbble.com/vince-sneed" class="contact-social" target="_blank" rel="noopener noreferrer">Dribbble</a>
-          <a href="https://x.com/SneedVince26" class="contact-social" target="_blank" rel="noopener noreferrer">X</a>
-          <a href="https://www.linkedin.com/in/vincentsneed/" class="contact-social" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="#" class="contact-social">Instagram</a>
+          <a href="#" class="contact-social">LinkedIn</a>
+          <a href="#" class="contact-social">Dribbble</a>
         </div>
       </div>
 
       <!-- Right: form -->
       <div class="contact-right fade-right delay-2">
-        <form class="form-stack" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="713c5b91-4dcd-4a78-b682-39bb549d36de" />
+        <form class="form-stack" id="contactForm">
 
-          <div class="field-group fade-up delay-1">
+          <div class="field-group">
             <label class="field-label" for="name">Your Name:</label>
-            <input
-              class="field-input"
-              id="name"
-              name="name"
-              type="text"
-              placeholder="Enter your name here"
-              autocomplete="name"
-            />
+            <input class="field-input" id="name" name="name" type="text" placeholder="Vincent Sneed" autocomplete="name" />
           </div>
 
-          <div class="field-group fade-up delay-2">
+          <div class="field-group">
             <label class="field-label" for="email">Your Email:</label>
-            <input
-              class="field-input"
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Enter your email here"
-              autocomplete="email"
-            />
+            <input class="field-input" id="email" name="email" type="email" placeholder="vincentsneed09@gmail.com" autocomplete="email" />
           </div>
 
-          <div class="field-group fade-up delay-3">
-            <label class="field-label" for="interest">I Am Interested In:</label>
-            <div class="select-wrapper">
-              <select class="field-select" id="interest" name="service">
-                <option value="" disabled selected hidden>Select from the dropdown</option>
-                <option value="branding">Branding</option>
-                <option value="websites">Websites</option>
-                <option value="ai-workflows">Ai Workflows</option>
-                <option value="marketing">Marketing</option>
-              </select>
-              <svg class="select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M4 6l4 4 4-4" stroke="#757c7d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-
-          <div class="field-group fade-up delay-4">
+          <div class="field-group">
             <label class="field-label" for="message">Message Me:</label>
-            <textarea
-              class="field-textarea"
-              id="message"
-              name="message"
-              placeholder="Enter your message here"
-            ></textarea>
+            <textarea class="field-textarea" id="message" name="message" placeholder="Enter your message here"></textarea>
           </div>
 
-          <div class="form-submit fade-up delay-5">
+          <div class="form-submit">
             <button class="btn-submit" type="submit">Submit Form</button>
             <p class="form-terms">
               By clicking the submit button you agree to our <a href="#">Terms and Conditions</a>
@@ -634,9 +575,10 @@
         <div class="footer-copy">© 2026 Tangent Design. All rights reserved.</div>
       </div>
       <nav class="footer-links" aria-label="Social links">
-        <a href="mailto:vincentsneed26@gmail.com" class="footer-link">Email</a>
-        <a href="https://x.com/SneedVince26" class="footer-link" target="_blank" rel="noopener noreferrer">X</a>
-        <a href="https://www.linkedin.com/in/vincentsneed/" class="footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="#" class="footer-link">Email</a>
+        <a href="#" class="footer-link">LinkedIn</a>
+        <a href="#" class="footer-link">Instagram</a>
+        <a href="#" class="footer-link">Twitter</a>
       </nav>
     </div>
   </footer>
@@ -690,54 +632,25 @@
     });
     document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; });
 
-    // ── Select colour feedback ──
-    const sel = document.getElementById('interest');
-    sel.addEventListener('change', () => sel.classList.toggle('has-value', sel.value !== ''));
-
     // ── Form submission ──
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-      contactForm.addEventListener('submit', async function(e) {
+      contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        const name    = document.getElementById('name').value.trim();
-        const email   = document.getElementById('email').value.trim();
-        const service = document.getElementById('interest').value;
-        const message = document.getElementById('message').value.trim();
-        if (!name || !email || !service || !message) {
-          [['name', name], ['email', email], ['message', message]].forEach(([id, val]) => {
-            document.getElementById(id).style.boxShadow = val ? '' : 'inset 0 0 0 1.5px rgba(200,50,50,0.5)';
-          });
-          document.getElementById('interest').style.boxShadow = service ? '' : 'inset 0 0 0 1.5px rgba(200,50,50,0.5)';
-          return;
-        }
         const btn = this.querySelector('.btn-submit');
-        btn.textContent = 'Sending…';
+        const fields = Object.fromEntries(new FormData(this));
+        const body = [
+          fields.name    ? 'Name: '    + fields.name    : '',
+          fields.email   ? 'Email: '   + fields.email   : '',
+          fields.service ? 'Interest: '+ fields.service : '',
+          fields.message ? 'Message:\n'+ fields.message : ''
+        ].filter(Boolean).join('\n\n');
+        window.location.href = 'mailto:vincentsneed26@gmail.com'
+          + '?subject=' + encodeURIComponent('New Enquiry — Tangent Design')
+          + '&body='    + encodeURIComponent(body);
+        btn.textContent = 'Submitted';
         btn.disabled = true;
-        try {
-          const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(this) });
-          const result = await res.json();
-          if (result.success) {
-            btn.textContent = '✓ Message Sent';
-            btn.style.background = '#4a7c59';
-            btn.style.transform = 'none';
-            contactForm.reset();
-            document.getElementById('interest').classList.remove('has-value');
-          } else {
-            btn.textContent = 'Something went wrong — try again';
-            btn.style.background = '#b94040';
-            btn.disabled = false;
-          }
-        } catch {
-          btn.textContent = 'Something went wrong — try again';
-          btn.style.background = '#b94040';
-          btn.disabled = false;
-        }
-        ['name','email','message','interest'].forEach(id => {
-          document.getElementById(id).style.boxShadow = '';
-        });
-      });
-      contactForm.querySelectorAll('input, select, textarea').forEach(el => {
-        el.addEventListener('input', () => { el.style.boxShadow = ''; });
+        btn.style.background = 'var(--steel)';
       });
     }
   </script>
