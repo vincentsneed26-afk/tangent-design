@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Block internal tools from indexing
+Disallow: /tools/
+
+Sitemap: https://tangentdesign.co.uk/sitemap.xml
