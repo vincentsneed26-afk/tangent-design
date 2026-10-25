@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms and Conditions — Tangent Design</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #f9f9f9; color: #2d3435; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    :root {
+      --dark: #2d3435; --muted: #5a6061; --label: #757c7d; --steel: #5e5e5e;
+      --bg: #f9f9f9; --bg-alt: #f2f4f4; --white: #f8f8f8;
+      --footer-bg: #f5f5f4; --footer-txt: #78716c;
+      --nav-bg: rgba(255,255,255,0.82);
+      --max-w: 1280px; --content-w: 720px; --gutter: 48px;
+    }
+
+    /* Animations */
+    .fade-up { opacity: 0; transform: translateY(32px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; }
+    @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; transition: none; } }
+
+    /* Nav */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color 0.4s, box-shadow 0.4s; }
+    .nav.scrolled { border-color: rgba(0,0,0,0.06); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 22px var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 18px; letter-spacing: -1px; color: #1c1917; text-transform: uppercase; transition: opacity 0.2s; }
+    .nav-logo:hover { opacity: 0.65; }
+    .nav-links { display: flex; gap: 36px; align-items: center; }
+    .nav-link { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: -0.3px; color: var(--footer-txt); text-transform: uppercase; position: relative; transition: color 0.25s; }
+    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--dark); transition: width 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .nav-link:hover { color: var(--dark); } .nav-link:hover::after { width: 100%; }
+    .nav-cta { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--white); background: var(--steel); padding: 10px 28px; transition: background 0.25s, transform 0.2s; }
+    .nav-cta:hover { background: var(--dark); transform: translateY(-1px); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--dark); transition: all 0.3s; }
+
+    /* Terms content — single column */
+    .terms { max-width: calc(var(--content-w) + var(--gutter) * 2); margin: 0 auto; padding: 160px var(--gutter) 128px; }
+    .terms-eyebrow { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 3.6px; text-transform: uppercase; color: var(--label); margin-bottom: 16px; }
+    .terms-title { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(48px,7vw,96px); line-height: 0.9; letter-spacing: -0.05em; text-transform: uppercase; color: var(--dark); margin-bottom: 32px; }
+    .terms-updated { font-size: 14px; color: var(--label); padding-bottom: 48px; margin-bottom: 64px; border-bottom: 1px solid rgba(117,124,125,0.2); }
+    .terms-intro { font-size: 19px; line-height: 1.7; color: var(--muted); margin-bottom: 64px; }
+    .terms-section { margin-bottom: 56px; }
+    .terms-section h2 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(22px,2.4vw,28px); letter-spacing: -0.03em; text-transform: uppercase; color: var(--dark); margin-bottom: 20px; display: flex; gap: 16px; align-items: baseline; }
+    .terms-section h2 .num { font-weight: 700; font-size: 12px; letter-spacing: 2.4px; color: var(--label); flex-shrink: 0; }
+    .terms-section p, .terms-section li { font-size: 16px; line-height: 1.75; color: var(--muted); }
+    .terms-section p + p { margin-top: 16px; }
+    .terms-section ul { margin: 16px 0 0 20px; display: flex; flex-direction: column; gap: 8px; }
+    .terms-section a { color: var(--dark); text-decoration: underline; text-underline-offset: 3px; }
+    .terms-back { display: inline-flex; align-items: center; gap: 16px; margin-top: 24px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--dark); transition: gap 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .terms-back:hover { gap: 24px; }
+
+    /* Footer */
+    .footer { background: var(--footer-bg); padding: 64px var(--gutter); }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 32px; }
+    .footer-brand { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.35px; text-transform: uppercase; color: #1c1917; margin-bottom: 8px; }
+    .footer-copy { font-size: 13px; letter-spacing: 0.35px; color: var(--footer-txt); text-transform: uppercase; }
+    .footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
+    .footer-link { font-size: 14px; letter-spacing: 0.35px; color: var(--footer-txt); transition: color 0.2s; position: relative; }
+    .footer-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--dark); transition: width 0.3s; }
+    .footer-link:hover { color: var(--dark); } .footer-link:hover::after { width: 100%; }
+
+    /* Cursor */
+    .cursor-dot { width: 6px; height: 6px; background: var(--dark); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width 0.3s, height 0.3s, opacity 0.3s, background 0.3s, border 0.3s; opacity: 0; }
+    @media (hover: none) { .cursor-dot { display: none; } }
+
+    @media (max-width: 1024px) { :root { --gutter: 32px; } }
+    @media (max-width: 768px) {
+      :root { --gutter: 20px; }
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; gap: 20px; position: absolute; top: 100%; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); padding: 24px var(--gutter) 32px; border-top: 1px solid rgba(0,0,0,0.06); }
+      .nav-cta { display: none; } .nav-toggle { display: flex; }
+      .terms { padding-top: 120px; padding-bottom: 80px; }
+      .terms-intro { font-size: 17px; margin-bottom: 48px; }
+      .terms-section h2 { flex-direction: column; gap: 6px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Tangent Design</a>
+      <div class="nav-links" id="navLinks">
+        <a href="work.html" class="nav-link">Work</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <a href="contact.html" class="nav-cta">Get In Touch</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="terms">
+    <p class="terms-eyebrow fade-up">Legal</p>
+    <h1 class="terms-title fade-up delay-1">Terms &amp;<br>Conditions</h1>
+    <p class="terms-updated fade-up delay-2">Last updated: 25 October 2026</p>
+
+    <p class="terms-intro fade-up">These terms and conditions govern your use of the Tangent Design website. By accessing this website or submitting an enquiry through its contact form, you agree to be bound by these terms. If you do not agree with any part of them, please do not use this website.</p>
+
+    <section class="terms-section fade-up">
+      <h2><span class="num">01</span>About Tangent Design</h2>
+      <p>Tangent Design is a design studio based in Malvern, United Kingdom, offering branding, website design, marketing and AI workflow services. In these terms, "Tangent Design", "we", "us" and "our" refer to Tangent Design and this website. "You" and "your" refer to any person accessing or using the website.</p>
+    </section>
+
+    <section class="terms-section fade-up">
+      <h2><span class="num">02</span>Use of this website</h2>
+      <p>You may view, browse and share links to pages on Tangent Design for your own personal, non-commercial purposes. When using the website, you agree not to:</p>
+      <ul>
+        <li>use the website in any way that is unlawful, fraudulent or harmful;</li>
+        <li>attempt to gain unauthorised access to the website, its server or any connected system;</li>
+        <li>introduce viruses, malicious code or any other harmful material;</li>
+        <li>use automated tools to scrape, copy or harvest content from the website;</li>
+        <li>submit false, misleading or abusive information through the contact form.</li>
+      </ul>
+    </section>
+
+    <section class="terms-section fade-up">
+      <h2><span class="num">03</span>Intellectual property</h2>
+      <p>Unless otherwise stated, all content on Tangent Design, including designs, layouts, graphics, images, text and code, is owned by or licensed to Tangent Design and is protected by copyright and other intellectual property laws.</p>
+      <p>Portfolio projects shown on this website may include names, logos and trademarks belonging to clients and third parties. These remain the property of their respective owners and are displayed solely to showcase work produced by Tangent Design. Their inclusion does not imply any endorsement.</p>
+      <p>You may not reproduce, distribute, modify or commercially use any content from this website without prior written permission from Tangent Design.</p>
+    </section>
+
+    <section class="terms-section fade-up">
+      <h2><span class="num">04</span>Enquiries and contact form</h2>
+      <p>By submitting the contact form, you confirm that the information you provide is accurate and that you are happy for Tangent Design to contact you about your enquiry. Submitting an enquiry does not create a contract or any obligation for either party to proceed with a project.</p>
+      <p>Any design work, commission or service will be agreed separately in writing, including scope, fees, timescales and ownership of deliverables. Those project terms will take precedence over these website terms.</p>
+    </section>
+
+    <section class="terms-section fade-up">
+      <h2><span class="num">05</span>Privacy and your information</h2>
+      <p>Information you submit through the contact form, such as your name, email address and message, is used only to respond to your enquiry and to discuss potential work. Form submissions are processed by a third-party form service on our behalf. We will not sell your personal information or share it with third parties for marketing purposes.</p>
+      <p>We handle personal data in line with UK data protection law, including the UK GDPR and the Data Protection Act 2018. You may ask us to access, correct or delete the information we hold about you at any time by emailing <a href="mailto:vincentsneed26@gmail.com">vincentsneed26@gmail.com</a>.</p>
+    </section>
+
+    <section class="terms-section fade-up">
+      <h2><span class="num">06</span>Third-party links</h2>
+      <p>Tangent Design contains links to external websites, including live client sites and social media profiles. These links are provided for convenience only. We have no control over the content, availability or privacy practices of those websites and accept no responsibility for them or for any loss arising from your use of them.</p>
+    </section>
+
+    <section class="terms-section fade-up">
+      <h2><span class="num">07</span>Accuracy and availability</h2>
+      <p>We aim to keep the information on Tangent Design accurate and up to date, but we make no guarantees that the content is complete, current or free from errors. The website is provided on an "as is" and "as available" basis, and we may change, suspend or withdraw any part of it at any time without notice.</p>
+    </section>
+
+    <section class="terms-section fade-up">
+      <h2><span class="num">08</span>Limitation of liability</h2>
+      <p>To the fullest extent permitted by law, Tangent Design will not be liable for any direct, indirect or consequential loss or damage arising from your use of, or inability to use, this website or any content on it. This includes loss of data, profits, business or goodwill.</p>
+      <p>Nothing in these terms excludes or limits liability for death or personal injury caused by negligence, for fraud or fraudulent misrepresentation, or for any other liability that cannot be excluded under the laws of England and Wales.</p>
+    </section>
+
+    <section class="terms-section fade-up">
+      <h2><span class="num">09</span>Changes to these terms</h2>
+      <p>Tangent Design may update these terms from time to time. Any changes will be posted on this page with a revised "last updated" date. Continuing to use the website after changes are published means you accept the updated terms.</p>
+    </section>
+
+    <section class="terms-section fade-up">
+      <h2><span class="num">10</span>Governing law</h2>
+      <p>These terms are governed by the laws of England and Wales. Any dispute arising from them or from your use of Tangent Design will be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
+    </section>
+
+    <section class="terms-section fade-up">
+      <h2><span class="num">11</span>Contact</h2>
+      <p>If you have any questions about these terms, please email <a href="mailto:vincentsneed26@gmail.com">vincentsneed26@gmail.com</a> or use the <a href="contact.html">contact page</a>.</p>
+      <a href="contact.html" class="terms-back">Back to Contact
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M1 7.5h13M8.5 2l6.5 5.5L8.5 13" stroke="#2d3435" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Tangent Design Editorial</div>
+        <div class="footer-copy">© 2026 Tangent Design. All rights reserved.</div>
+      </div>
+      <nav class="footer-links" aria-label="Social links">
+        <a href="mailto:vincentsneed26@gmail.com" class="footer-link">Email</a>
+        <a href="https://x.com/SneedVince26" class="footer-link" target="_blank" rel="noopener noreferrer">X</a>
+        <a href="https://www.linkedin.com/in/vincentsneed/" class="footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const animEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { rootMargin: '-40px 0px', threshold: 0.05 });
+    animEls.forEach(el => observer.observe(el));
+    setTimeout(() => animEls.forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible'); }), 80);
+
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
+
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      const spans = toggle.querySelectorAll('span');
+      if (open) { spans[0].style.transform = 'translateY(7px) rotate(45deg)'; spans[1].style.opacity = '0'; spans[2].style.transform = 'translateY(-7px) rotate(-45deg)'; }
+      else { spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; }); }
+    });
+
+    const dot = document.getElementById('cursorDot');
+    document.addEventListener('mousemove', e => { dot.style.opacity = '1'; dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px'; });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => { dot.style.width = '24px'; dot.style.height = '24px'; dot.style.background = 'transparent'; dot.style.border = '1.5px solid var(--dark)'; });
+      el.addEventListener('mouseleave', () => { dot.style.width = '6px'; dot.style.height = '6px'; dot.style.background = 'var(--dark)'; dot.style.border = 'none'; });
+    });
+    document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; });
+  </script>
+</body>
+</html>
